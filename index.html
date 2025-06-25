@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Bússola Ética na Tempestade Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #3C3C3B;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #0B6A6B;
+            transform: translateY(-2px);
+        }
+        .section-card {
+            background-color: #FFFFFF;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease;
+        }
+        .section-card:hover {
+            transform: translateY(-5px);
+        }
+        .fake-news-sim-step {
+            display: none;
+        }
+        .fake-news-sim-step.active {
+            display: block;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background-color: #0B6A6B;
+            color: #FFFFFF;
+        }
+        .btn-primary:hover {
+            background-color: #085253;
+            transform: scale(1.05);
+        }
+        .btn-secondary {
+            background-color: #EAE8E1;
+            color: #3C3C3B;
+        }
+        .btn-secondary:hover {
+            background-color: #D9D6CB;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-[#F8F7F4]/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-black text-[#0B6A6B]">A Bússola Ética</h1>
+            <div class="hidden md:flex space-x-8 font-bold">
+                <a class="nav-link active" data-target="intro">Início</a>
+                <a class="nav-link" data-target="etica">O Dilema Ético</a>
+                <a class="nav-link" data-target="redes">A Teia Social</a>
+                <a class="nav-link" data-target="fakes">A Fábrica de Fakes</a>
+                <a class="nav-link" data-target="acao">Seja a Mudança</a>
+            </div>
+            <div class="md:hidden">
+                <select id="mobile-nav" class="bg-white border border-gray-300 rounded-lg py-2 px-3">
+                    <option value="intro">Início</option>
+                    <option value="etica">O Dilema Ético</option>
+                    <option value="redes">A Teia Social</option>
+                    <option value="fakes">A Fábrica de Fakes</option>
+                    <option value="acao">Seja a Mudança</option>
+                </select>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <section id="intro" class="text-center min-h-[70vh] flex flex-col justify-center items-center">
+            <h2 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-4">
+                Desvendando a Teia: Ética, Redes Sociais e Fake News.
+            </h2>
+            <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-600 mb-8">
+                Você já parou para pensar na quantidade de "verdades" que consome diariamente online? Esta aplicação explora a intersecção crucial entre nossa vida digital, os dilemas éticos que enfrentamos e o desafio crescente da desinformação.
+            </p>
+            <a href="#etica" class="btn btn-primary" id="explore-btn">Comece a Explorar</a>
+        </section>
+
+        <section id="etica" class="py-16 scroll-mt-20">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-4xl font-black mb-2">O Dilema Ético</h3>
+                <p class="max-w-2xl mx-auto text-gray-600">
+                    Nesta seção, exploramos o que significa ser ético no ambiente digital. Cada clique, compartilhamento e postagem constrói sua identidade online e impacta os outros, levantando questões sobre privacidade, responsabilidade e o legado que deixamos para trás.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="section-card text-center">
+                    <div class="text-4xl mb-4">🔐</div>
+                    <h4 class="text-xl font-bold mb-2">Privacidade e Consentimento</h4>
+                    <p class="text-gray-600">Seus dados são a moeda da era digital. O que você compartilha, com quem e por quê? Refletir sobre isso é o primeiro passo para uma navegação mais segura e consciente.</p>
+                </div>
+                <div class="section-card text-center">
+                    <div class="text-4xl mb-4">👣</div>
+                    <h4 class="text-xl font-bold mb-2">Pegada Digital</h4>
+                    <p class="text-gray-600">Tudo o que você faz online deixa um rastro. Essa pegada digital é permanente e molda como o mundo (e os algoritmos) te enxergam. Ela constrói sua reputação digital, para o bem ou para o mal.</p>
+                </div>
+                <div class="section-card text-center">
+                    <div class="text-4xl mb-4">🤝</div>
+                    <h4 class="text-xl font-bold mb-2">Responsabilidade Individual</h4>
+                    <p class="text-gray-600">Um ambiente digital saudável é uma construção coletiva. Cada um de nós tem o poder e o dever de promover o respeito, a empatia e a veracidade nas nossas interações.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="redes" class="py-16 scroll-mt-20">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-4xl font-black mb-2">A Teia Social: Conexão ou Armadilha?</h3>
+                 <p class="max-w-2xl mx-auto text-gray-600">
+                    As redes sociais nos conectam de maneiras incríveis, mas também criam "bolhas" de informação através de algoritmos. Aqui, visualizamos como essas câmaras de eco funcionam e analisamos seu poder de influenciar nosso comportamento e nossas opiniões.
+                </p>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="section-card p-8">
+                    <h4 class="text-xl font-bold mb-4 text-center">A Câmara de Eco Algorítmica</h4>
+                    <div class="relative h-64 flex items-center justify-center">
+                        <div class="absolute w-64 h-64 border-2 border-dashed border-[#0B6A6B]/30 rounded-full animate-pulse"></div>
+                        <div class="absolute w-48 h-48 border-2 border-dashed border-[#0B6A6B]/50 rounded-full animate-pulse [animation-delay:-0.5s]"></div>
+                        <div class="absolute w-32 h-32 bg-[#0B6A6B]/10 rounded-full flex items-center justify-center">
+                            <div class="text-4xl">👤</div>
+                        </div>
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 bg-white px-2 rounded">👍</div>
+                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-4 bg-white px-2 rounded">❤️</div>
+                        <div class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white px-2 rounded">😂</div>
+                        <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white px-2 rounded">😠</div>
+                    </div>
+                     <p class="text-center text-gray-600 mt-4">Os algoritmos te mostram mais do que você já gosta, reforçando suas crenças e limitando a exposição a pontos de vista diferentes, criando uma "bolha".</p>
+                </div>
+                 <div class="section-card">
+                    <h4 class="text-xl font-bold mb-4 text-center">Influência no Comportamento</h4>
+                    <div class="chart-container">
+                        <canvas id="influenceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="fakes" class="py-16 scroll-mt-20">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-4xl font-black mb-2">A Fábrica de Fake News</h3>
+                 <p class="max-w-2xl mx-auto text-gray-600">
+                    Nesta seção, entramos no coração do problema da desinformação. Vamos analisar os impactos devastadores das notícias falsas e, mais importante, você poderá participar de uma simulação para entender exatamente como uma mentira digital nasce e se espalha.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-3 section-card" id="fakeNewsSimulator">
+                    <h4 class="text-xl font-bold mb-4 text-center">Simulação: O Nascimento de uma Fake News</h4>
+                    
+                    <div id="sim-step-1" class="fake-news-sim-step active text-center">
+                        <h5 class="font-bold text-lg mb-2">Etapa 1: O Gatilho</h5>
+                        <p class="text-gray-600 mb-4">Um estudo científico real, porém complexo, foi divulgado sobre os efeitos do consumo de um novo adoçante artificial. Os resultados são ambíguos.</p>
+                        <p class="text-gray-800 font-bold mb-4 bg-yellow-100 border border-yellow-300 p-3 rounded-lg">Fato: "Estudo preliminar indica possíveis alterações na flora intestinal em ratos expostos a altas doses do Adoçante X."</p>
+                        <button class="btn btn-primary" onclick="simGoTo(2)">Distorcer o Fato</button>
+                    </div>
+
+                    <div id="sim-step-2" class="fake-news-sim-step text-center">
+                        <h5 class="font-bold text-lg mb-2">Etapa 2: A Criação</h5>
+                        <p class="text-gray-600 mb-4">Agora, transforme o fato complexo em uma manchete sensacionalista e alarmista. Qual delas tem mais potencial para viralizar?</p>
+                        <div class="space-y-3 my-4">
+                            <button class="w-full text-left p-3 bg-gray-100 rounded-lg hover:bg-red-100 transition" onclick="simGoTo(3)">"Novo adoçante pode ser perigoso, diz estudo."</button>
+                            <button class="w-full text-left p-3 bg-gray-100 rounded-lg hover:bg-red-100 transition" onclick="simGoTo(3)">"URGENTE: Novo adoçante 'zero açúcar' CAUSA CÂNCER, revela estudo chocante!"</button>
+                            <button class="w-full text-left p-3 bg-gray-100 rounded-lg hover:bg-red-100 transition" onclick="simGoTo(3)">"Cientistas debatem riscos de adoçantes artificiais."</button>
+                        </div>
+                    </div>
+
+                    <div id="sim-step-3" class="fake-news-sim-step text-center">
+                        <h5 class="font-bold text-lg mb-2">Etapa 3: A Disseminação</h5>
+                        <p class="text-gray-600 mb-4">Sua notícia falsa foi criada. Veja como ela se espalha exponencialmente através de compartilhamentos e reações emocionais.</p>
+                        <div class="text-center p-4">
+                            <div class="text-6xl animate-bounce">🔥</div>
+                            <p class="font-bold text-2xl my-2 text-red-600">Viralizando!</p>
+                            <div class="flex justify-center space-x-6 text-gray-700">
+                                <p>Compartilhamentos: <span id="shares" class="font-bold">0</span></p>
+                                <p>Reações: <span id="reactions" class="font-bold">0</span></p>
+                            </div>
+                        </div>
+                         <button class="btn btn-primary mt-4" onclick="simGoTo(4)">Verificar a Notícia</button>
+                    </div>
+                    
+                    <div id="sim-step-4" class="fake-news-sim-step">
+                        <h5 class="font-bold text-lg mb-2 text-center">Etapa 4: A Verificação</h5>
+                        <p class="text-gray-600 mb-4 text-center">Sua notícia viralizou, mas é falsa. Vamos desmascará-la usando o pensamento crítico.</p>
+                        <ul class="space-y-2 text-left">
+                            <li class="p-2 bg-green-100 rounded-lg">✔️ **A fonte é confiável?** Não, é um portal desconhecido.</li>
+                            <li class="p-2 bg-green-100 rounded-lg">✔️ **A manchete é sensacionalista?** Sim, usa "URGENTE" e "CHOCANTE".</li>
+                             <li class="p-2 bg-green-100 rounded-lg">✔️ **Procurou em outros sites?** Sim, grandes portais de notícias não confirmam a informação.</li>
+                        </ul>
+                         <div class="text-center mt-6">
+                            <button class="btn btn-secondary" onclick="simGoTo(1)">Reiniciar Simulação</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 section-card">
+                    <h4 class="text-xl font-bold mb-4 text-center">Impactos Reais da Desinformação</h4>
+                    <div class="chart-container">
+                        <canvas id="impactsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="acao" class="py-16 scroll-mt-20">
+             <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-4xl font-black mb-2">Seja a Mudança: A Bússola do Cidadão Digital</h3>
+                <p class="max-w-2xl mx-auto text-gray-600">
+                    Combater a desinformação começa com cada um de nós. Esta seção oferece ferramentas práticas para você navegar no ambiente digital de forma mais crítica e responsável. Teste seus conhecimentos no quiz e aprenda a ser um agente positivo na rede.
+                </p>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div id="quiz-container" class="section-card p-8">
+                    <h4 class="text-xl font-bold mb-4 text-center">Quiz: Verdade ou Boato?</h4>
+                    <div id="quiz-content" class="text-center">
+                        <p class="text-gray-600 mb-4">Teste sua habilidade de identificar notícias falsas. Clique abaixo para começar.</p>
+                        <button id="start-quiz-btn" class="btn btn-primary">Começar Quiz</button>
+                    </div>
+                    <div id="quiz-result" class="hidden text-center">
+                         <h5 class="text-2xl font-bold mb-2">Quiz Finalizado!</h5>
+                         <p class="text-lg">Você acertou <span id="score"></span> de <span id="total-questions"></span>.</p>
+                         <button id="retry-quiz-btn" class="btn btn-secondary mt-4">Tentar Novamente</button>
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                     <div class="section-card p-0 overflow-hidden">
+                        <button class="w-full text-left p-6 font-bold text-lg flex justify-between items-center accordion-header">
+                            <span>🧠 Pensamento Crítico</span>
+                            <span>+</span>
+                        </button>
+                        <div class="accordion-content hidden p-6 pt-0">
+                            <p class="text-gray-600">Sempre questione. Desconfie de títulos alarmistas. Verifique a data de publicação. Leia além da manchete. Pergunte-se: por que essa informação está sendo compartilhada?</p>
+                        </div>
+                    </div>
+                     <div class="section-card p-0 overflow-hidden">
+                        <button class="w-full text-left p-6 font-bold text-lg flex justify-between items-center accordion-header">
+                            <span>📚 Alfabetização Midiática</span>
+                            <span>+</span>
+                        </button>
+                        <div class="accordion-content hidden p-6 pt-0">
+                            <p class="text-gray-600">Entenda como a mídia funciona. Aprenda a diferenciar opinião de fato. Busque fontes primárias e consulte agências de checagem de fatos antes de acreditar ou compartilhar.</p>
+                        </div>
+                    </div>
+                     <div class="section-card p-0 overflow-hidden">
+                        <button class="w-full text-left p-6 font-bold text-lg flex justify-between items-center accordion-header">
+                            <span>📢 Ação Consciente</span>
+                            <span>+</span>
+                        </button>
+                         <div class="accordion-content hidden p-6 pt-0">
+                            <p class="text-gray-600">Encontrou uma fake news? Não compartilhe, nem para criticar. Denuncie a postagem na própria plataforma. Avise a pessoa que compartilhou, de forma privada e educada.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <h4 class="font-bold mb-4">Recursos Adicionais e Checagem de Fatos</h4>
+            <div class="flex justify-center space-x-6">
+                <a href="https://lupa.uol.com.br/" target="_blank" class="hover:text-teal-300">Agência Lupa</a>
+                <a href="https://aosfatos.org/" target="_blank" class="hover:text-teal-300">Aos Fatos</a>
+                <a href="https://projetocomprova.com.br/" target="_blank" class="hover:text-teal-300">Projeto Comprova</a>
+            </div>
+            <p class="text-sm text-gray-400 mt-8">Esta é uma aplicação interativa criada para fins educacionais.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const influenceCtx = document.getElementById('influenceChart').getContext('2d');
+            new Chart(influenceCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Comprar algo', 'Formar opinião', 'Visitar um lugar'],
+                    datasets: [{
+                        label: '% de influência percebida',
+                        data: [65, 78, 55],
+                        backgroundColor: ['#0B6A6B', '#5B9A9A', '#A8CACB'],
+                        borderRadius: 5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y + '%';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: { color: 'rgba(0,0,0,0.05)' }
+                        },
+                         x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            const impactsCtx = document.getElementById('impactsChart').getContext('2d');
+            new Chart(impactsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Danos à Democracia', 'Riscos à Saúde Pública', 'Prejuízos à Vida Pessoal'],
+                    datasets: [{
+                        label: 'Impactos das Fake News',
+                        data: [40, 35, 25],
+                        backgroundColor: ['#D64933', '#F5A623', '#8B572A'],
+                        borderColor: '#F8F7F4',
+                        borderWidth: 4,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20
+                            }
+                        }
+                    }
+                }
+            });
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+            const mobileNav = document.getElementById('mobile-nav');
+
+            function updateActiveLink(targetId) {
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.dataset.target === targetId);
+                });
+                if(mobileNav.value !== targetId) {
+                   mobileNav.value = targetId;
+                }
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        updateActiveLink(entry.target.id);
+                    }
+                });
+            }, { rootMargin: '-50% 0px -50% 0px' });
+            
+            sections.forEach(section => observer.observe(section));
+
+            function scrollToSection(targetId) {
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    scrollToSection(e.target.dataset.target);
+                });
+            });
+
+            mobileNav.addEventListener('change', (e) => {
+                scrollToSection(e.target.value);
+            });
+            
+            document.getElementById('explore-btn').addEventListener('click', (e) => {
+                 e.preventDefault();
+                 scrollToSection('etica');
+            });
+            
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('span:last-child');
+                    content.classList.toggle('hidden');
+                    icon.textContent = content.classList.contains('hidden') ? '+' : '-';
+                });
+            });
+
+            const quizData = [
+                { question: "Uma notícia com título 'URGENTE' e letras maiúsculas é geralmente confiável.", answer: false },
+                { question: "Se uma notícia foi compartilhada por um amigo ou familiar, ela é automaticamente verdadeira.", answer: false },
+                { question: "Verificar a data de publicação é importante, pois notícias antigas podem ser usadas fora de contexto.", answer: true },
+                { question: "Sites com erros de português e design amador são um sinal de alerta para fake news.", answer: true }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            const quizContent = document.getElementById('quiz-content');
+            const startQuizBtn = document.getElementById('start-quiz-btn');
+            const quizResult = document.getElementById('quiz-result');
+            let currentQuestionIndex = 0;
+            let score = 0;
+
+            function startQuiz() {
+                currentQuestionIndex = 0;
+                score = 0;
+                quizResult.classList.add('hidden');
+                showQuestion();
+            }
+
+            function showQuestion() {
+                const questionData = quizData[currentQuestionIndex];
+                quizContent.innerHTML = `
+                    <p class="text-lg mb-6">${questionData.question}</p>
+                    <div class="flex justify-center space-x-4">
+                        <button class="btn btn-primary answer-btn" data-answer="true">Verdadeiro</button>
+                        <button class="btn btn-secondary answer-btn" data-answer="false">Falso</button>
+                    </div>
+                `;
+                document.querySelectorAll('.answer-btn').forEach(btn => {
+                    btn.addEventListener('click', handleAnswer);
+                });
+            }
+
+            function handleAnswer(e) {
+                const selectedAnswer = e.target.dataset.answer === 'true';
+                if (selectedAnswer === quizData[currentQuestionIndex].answer) {
+                    score++;
+                }
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.length) {
+                    showQuestion();
+                } else {
+                    showResult();
+                }
+            }
+
+            function showResult() {
+                quizContent.innerHTML = '';
+                document.getElementById('score').textContent = score;
+                document.getElementById('total-questions').textContent = quizData.length;
+                quizResult.classList.remove('hidden');
+            }
+
+            startQuizBtn.addEventListener('click', startQuiz);
+            document.getElementById('retry-quiz-btn').addEventListener('click', startQuiz);
+
+        });
+
+        let simInterval;
+        function simGoTo(step) {
+            document.querySelectorAll('.fake-news-sim-step').forEach(el => el.classList.remove('active'));
+            document.getElementById(`sim-step-${step}`).classList.add('active');
+
+            if (step === 3) {
+                let shares = 0;
+                let reactions = 0;
+                const sharesEl = document.getElementById('shares');
+                const reactionsEl = document.getElementById('reactions');
+                sharesEl.textContent = 0;
+                reactionsEl.textContent = 0;
+
+                clearInterval(simInterval);
+                simInterval = setInterval(() => {
+                    shares += Math.floor(Math.random() * 150) + 50;
+                    reactions += Math.floor(Math.random() * 400) + 100;
+                    sharesEl.textContent = shares.toLocaleString('pt-BR');
+                    reactionsEl.textContent = reactions.toLocaleString('pt-BR');
+                }, 500);
+            } else {
+                 clearInterval(simInterval);
+            }
+        }
+    </script>
+</body>
+</html>
