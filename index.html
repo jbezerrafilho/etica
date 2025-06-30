@@ -17,8 +17,7 @@
         }
         .chart-container {
             position: relative;
-            width: 100%;
-            max-width: 600px;
+            width: 100%; /* Permite que o gráfico preencha o espaço disponível */
             margin-left: auto;
             margin-right: auto;
             height: 300px;
@@ -74,6 +73,63 @@
         .btn-secondary:hover {
             background-color: #D9D6CB;
         }
+        /* Estilos para feedback do quiz */
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+        }
+        .quiz-feedback.correct {
+            background-color: #D4EDDA;
+            color: #155724;
+            border: 1px solid #C3E6CB;
+        }
+        .quiz-feedback.incorrect {
+            background-color: #F8D7DA;
+            color: #721C24;
+            border: 1px solid #F5C6CB;
+        }
+        /* Estilos para o alternador de conteúdo na simulação */
+        .content-toggle-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            transition: all 0.2s ease;
+        }
+        .content-toggle-btn.active {
+            background-color: #0B6A6B;
+            color: #FFFFFF;
+            border-color: #0B6A6B;
+        }
+        /* Ajuste para quando só há uma opção ativa, para o botão 'Simulação Passo a Passo' ser o padrão ativo */
+        #content-example {
+            display: none; /* Esconde o conteúdo do exemplo do Papa por padrão */
+        }
+        #content-simulation {
+            display: block; /* Mostra o conteúdo da simulação por padrão */
+        }
+        .chart-source {
+            font-size: 0.85rem;
+            color: #5C5C5B;
+            margin-top: 1rem; /* Adicionado margem superior para separar do gráfico */
+            text-align: left; /* Alinhado à esquerda para listas de fontes */
+            padding-left: 1rem; /* Pequeno padding para alinhar com o texto do card */
+        }
+        .chart-source ul {
+            list-style: none; /* Remove bullet points padrão */
+            padding-left: 0;
+        }
+        .chart-source li {
+            margin-bottom: 0.25rem;
+        }
+        .chart-source a {
+            color: #0B6A6B;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -83,7 +139,7 @@
             <h1 class="text-xl md:text-2xl font-black text-[#0B6A6B]">A Bússola Ética</h1>
             <div class="hidden md:flex space-x-8 font-bold">
                 <a class="nav-link active" data-target="intro">Início</a>
-                <a class="nav-link" data-target="etica">O Dilema Ético</a>
+                <a class="nav-link" data-target="etica">O Dilema Ética</a>
                 <a class="nav-link" data-target="redes">A Teia Social</a>
                 <a class="nav-link" data-target="fakes">A Fábrica de Fakes</a>
                 <a class="nav-link" data-target="acao">Seja a Mudança</a>
@@ -91,7 +147,7 @@
             <div class="md:hidden">
                 <select id="mobile-nav" class="bg-white border border-gray-300 rounded-lg py-2 px-3">
                     <option value="intro">Início</option>
-                    <option value="etica">O Dilema Ético</option>
+                    <option value="etica">O Dilema Ética</option>
                     <option value="redes">A Teia Social</option>
                     <option value="fakes">A Fábrica de Fakes</option>
                     <option value="acao">Seja a Mudança</option>
@@ -132,7 +188,7 @@
                 <div class="section-card text-center">
                     <div class="text-4xl mb-4">🤝</div>
                     <h4 class="text-xl font-bold mb-2">Responsabilidade Individual</h4>
-                    <p class="text-gray-600">Um ambiente digital saudável é uma construção coletiva. Cada um de nós tem o poder e o dever de promover o respeito, a empatia e a veracidade nas nossas interações.</p>
+                    <p class="text-gray-600">Um ambiente digital saudável é uma construção coletiva. Cada uno de nós tem o poder e o dever de promover o respeito, a empatia e a veracidade nas nossas interações.</p>
                 </div>
             </div>
         </section>
@@ -144,11 +200,8 @@
                     As redes sociais nos conectam de maneiras incríveis, mas também criam "bolhas" de informação através de algoritmos. Aqui, visualizamos como essas câmaras de eco funcionam e analisamos seu poder de influenciar nosso comportamento e nossas opiniões.
                 </p>
             </div>
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div class="section-card p-8">
-                    <h4 class="text-xl font-bold mb-4 text-center">A Câmara de Eco Algorítmica</h4>
-                    <div class="relative h-64 flex items-center justify-center">
-                        <div class="absolute w-64 h-64 border-2 border-dashed border-[#0B6A6B]/30 rounded-full animate-pulse"></div>
+            <div class="grid lg:grid-cols-2 gap-12 items-stretch"> <div class="section-card p-8 flex flex-col"> <h4 class="text-xl font-bold mb-4 text-center">A Câmara de Eco Algorítmica</h4>
+                    <div class="relative flex-grow flex items-center justify-center min-h-[250px]"> <div class="absolute w-64 h-64 border-2 border-dashed border-[#0B6A6B]/30 rounded-full animate-pulse"></div>
                         <div class="absolute w-48 h-48 border-2 border-dashed border-[#0B6A6B]/50 rounded-full animate-pulse [animation-delay:-0.5s]"></div>
                         <div class="absolute w-32 h-32 bg-[#0B6A6B]/10 rounded-full flex items-center justify-center">
                             <div class="text-4xl">👤</div>
@@ -160,10 +213,16 @@
                     </div>
                      <p class="text-center text-gray-600 mt-4">Os algoritmos te mostram mais do que você já gosta, reforçando suas crenças e limitando a exposição a pontos de vista diferentes, criando uma "bolha".</p>
                 </div>
-                 <div class="section-card">
-                    <h4 class="text-xl font-bold mb-4 text-center">Influência no Comportamento</h4>
-                    <div class="chart-container">
-                        <canvas id="influenceChart"></canvas>
+                 <div class="section-card flex flex-col"> <h4 class="text-xl font-bold mb-4 text-center">Influência no Comportamento</h4>
+                    <div class="chart-container flex-grow"> <canvas id="influenceChart"></canvas>
+                    </div>
+                    <div class="chart-source">
+                        <p class="font-semibold mb-2">Fontes dos Dados:</p>
+                        <ul>
+                            <li><a href="https://sebrae.com.br/sites/PortalSebrae/conteudos/posts/73-dos-brasileiros-ja-compraram-influenciados-pelas-redes-sociais,f4073d58eaf25810VgnVCM100000d701210aRCRD" target="_blank" rel="noopener noreferrer">Sebrae: "73% dos brasileiros já compraram influenciados pelas redes sociais"</a></li>
+                            <li><a href="https://www12.senado.leg.br/institucional/datasenado/materias/pesquisas/mais-de-80-dos-brasileiros-acreditam-que-redes-sociais-influenciam-muito-a-opiniao-das-pessoas" target="_blank" rel="noopener noreferrer">Senado Notícias: "83% acreditam que redes influenciam opinião"</a></li>
+                            <li><a href="https://www.marktest.com/wap/a/n/id~2bdc.aspx" target="_blank" rel="noopener noreferrer">Marktest: "62.8% influência em escolhas turísticas"</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -173,7 +232,7 @@
             <div class="text-center mb-12">
                 <h3 class="text-3xl md:text-4xl font-black mb-2">A Fábrica de Fake News</h3>
                  <p class="max-w-2xl mx-auto text-gray-600">
-                    Nesta seção, entramos no coração do problema da desinformação. Vamos analisar os impactos devastadores das notícias falsas e, mais importante, você poderá participar de uma simulação para entender exatamente como uma mentira digital nasce e se espalha.
+                    Nesta seção, entramos no coração do problema da desinformação. Você poderá participar de uma simulação para entender exatamente como uma mentira digital nasce e se espalha, e também visualizar os impactos devastadores das notícias falsas.
                 </p>
             </div>
 
@@ -181,47 +240,56 @@
                 <div class="lg:col-span-3 section-card" id="fakeNewsSimulator">
                     <h4 class="text-xl font-bold mb-4 text-center">Simulação: O Nascimento de uma Fake News</h4>
                     
-                    <div id="sim-step-1" class="fake-news-sim-step active text-center">
-                        <h5 class="font-bold text-lg mb-2">Etapa 1: O Gatilho</h5>
-                        <p class="text-gray-600 mb-4">Um estudo científico real, porém complexo, foi divulgado sobre os efeitos do consumo de um novo adoçante artificial. Os resultados são ambíguos.</p>
-                        <p class="text-gray-800 font-bold mb-4 bg-yellow-100 border border-yellow-300 p-3 rounded-lg">Fato: "Estudo preliminar indica possíveis alterações na flora intestinal em ratos expostos a altas doses do Adoçante X."</p>
-                        <button class="btn btn-primary" onclick="simGoTo(2)">Distorcer o Fato</button>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button class="content-toggle-btn active" data-content="simulation">Iniciar Simulação</button>
                     </div>
 
-                    <div id="sim-step-2" class="fake-news-sim-step text-center">
-                        <h5 class="font-bold text-lg mb-2">Etapa 2: A Criação</h5>
-                        <p class="text-gray-600 mb-4">Agora, transforme o fato complexo em uma manchete sensacionalista e alarmista. Qual delas tem mais potencial para viralizar?</p>
-                        <div class="space-y-3 my-4">
-                            <button class="w-full text-left p-3 bg-gray-100 rounded-lg hover:bg-red-100 transition" onclick="simGoTo(3)">"Novo adoçante pode ser perigoso, diz estudo."</button>
-                            <button class="w-full text-left p-3 bg-gray-100 rounded-lg hover:bg-red-100 transition" onclick="simGoTo(3)">"URGENTE: Novo adoçante 'zero açúcar' CAUSA CÂNCER, revela estudo chocante!"</button>
-                            <button class="w-full text-left p-3 bg-gray-100 rounded-lg hover:bg-red-100 transition" onclick="simGoTo(3)">"Cientistas debatem riscos de adoçantes artificiais."</button>
+                    <div id="content-example" class="hidden-content mb-6 text-center">
                         </div>
-                    </div>
 
-                    <div id="sim-step-3" class="fake-news-sim-step text-center">
-                        <h5 class="font-bold text-lg mb-2">Etapa 3: A Disseminação</h5>
-                        <p class="text-gray-600 mb-4">Sua notícia falsa foi criada. Veja como ela se espalha exponencialmente através de compartilhamentos e reações emocionais.</p>
-                        <div class="text-center p-4">
-                            <div class="text-6xl animate-bounce">🔥</div>
-                            <p class="font-bold text-2xl my-2 text-red-600">Viralizando!</p>
-                            <div class="flex justify-center space-x-6 text-gray-700">
-                                <p>Compartilhamentos: <span id="shares" class="font-bold">0</span></p>
-                                <p>Reações: <span id="reactions" class="font-bold">0</span></p>
+                    <div id="content-simulation" class="active-content">
+                        <div id="sim-step-1" class="fake-news-sim-step active text-center">
+                            <h5 class="font-bold text-lg mb-2">Etapa 1: O Gatilho</h5>
+                            <p class="text-gray-600 mb-4">Um estudo científico real, porém complexo, foi divulgado sobre os efeitos do consumo de um novo adoçante artificial. Os resultados são ambíguos.</p>
+                            <p class="text-gray-800 font-bold mb-4 bg-yellow-100 border border-yellow-300 p-3 rounded-lg">Fato: "Estudo preliminar indica possíveis alterações na flora intestinal em ratos expostos a altas doses do Adoçante X."</p>
+                            <button class="btn btn-primary" onclick="simGoTo(2)">Distorcer o Fato</button>
+                        </div>
+
+                        <div id="sim-step-2" class="fake-news-sim-step text-center">
+                            <h5 class="font-bold text-lg mb-2">Etapa 2: A Criação</h5>
+                            <p class="text-gray-600 mb-4">Agora, transforme o fato complexo em uma manchete sensacionalista e alarmista. Qual delas tem mais potencial para viralizar?</p>
+                            <div class="space-y-3 my-4">
+                                <button class="w-full text-left p-3 bg-gray-100 rounded-lg hover:bg-red-100 transition" onclick="simGoTo(3)">"Novo adoçante pode ser perigoso, diz estudo."</button>
+                                <button class="w-full text-left p-3 bg-gray-100 rounded-lg hover:bg-red-100 transition" onclick="simGoTo(3)">"URGENTE: Novo adoçante 'zero açúcar' CAUSA CÂNCER, revela estudo chocante!"</button>
+                                <button class="w-full text-left p-3 bg-gray-100 rounded-lg hover:bg-red-100 transition" onclick="simGoTo(3)">"Cientistas debatem riscos de adoçantes artificiais."</button>
                             </div>
                         </div>
-                         <button class="btn btn-primary mt-4" onclick="simGoTo(4)">Verificar a Notícia</button>
-                    </div>
-                    
-                    <div id="sim-step-4" class="fake-news-sim-step">
-                        <h5 class="font-bold text-lg mb-2 text-center">Etapa 4: A Verificação</h5>
-                        <p class="text-gray-600 mb-4 text-center">Sua notícia viralizou, mas é falsa. Vamos desmascará-la usando o pensamento crítico.</p>
-                        <ul class="space-y-2 text-left">
-                            <li class="p-2 bg-green-100 rounded-lg">✔️ **A fonte é confiável?** Não, é um portal desconhecido.</li>
-                            <li class="p-2 bg-green-100 rounded-lg">✔️ **A manchete é sensacionalista?** Sim, usa "URGENTE" e "CHOCANTE".</li>
-                             <li class="p-2 bg-green-100 rounded-lg">✔️ **Procurou em outros sites?** Sim, grandes portais de notícias não confirmam a informação.</li>
-                        </ul>
-                         <div class="text-center mt-6">
-                            <button class="btn btn-secondary" onclick="simGoTo(1)">Reiniciar Simulação</button>
+
+                        <div id="sim-step-3" class="fake-news-sim-step text-center">
+                            <h5 class="font-bold text-lg mb-2">Etapa 3: A Disseminação</h5>
+                            <p class="text-gray-600 mb-4">Sua notícia falsa foi criada. Veja como ela se espalha exponencialmente através de compartilhamentos e reações emocionais.</p>
+                            <div class="text-center p-4">
+                                <div class="text-6xl animate-bounce">🔥</div>
+                                <p class="font-bold text-2xl my-2 text-red-600">Viralizando!</p>
+                                <div class="flex justify-center space-x-6 text-gray-700">
+                                    <p>Compartilhamentos: <span id="shares" class="font-bold">0</span></p>
+                                    <p>Reações: <span id="reactions" class="font-bold">0</span></p>
+                                </div>
+                            </div>
+                             <button class="btn btn-primary mt-4" onclick="simGoTo(4)">Verificar a Notícia</button>
+                        </div>
+                        
+                        <div id="sim-step-4" class="fake-news-sim-step">
+                            <h5 class="font-bold text-lg mb-2 text-center">Etapa 4: A Verificação</h5>
+                            <p class="text-gray-600 mb-4 text-center">Sua notícia viralizou, mas é falsa. Vamos desmascará-la usando o pensamento crítico.</p>
+                            <ul class="space-y-2 text-left">
+                                <li class="p-2 bg-green-100 rounded-lg">✔️ **A fonte é confiável?** Não, é um portal desconhecido.</li>
+                                <li class="p-2 bg-green-100 rounded-lg">✔️ **A manchete é sensacionalista?** Sim, usa "URGENTE" e "CHOCANTE".</li>
+                                 <li class="p-2 bg-green-100 rounded-lg">✔️ **Procurou em outros sites?** Sim, grandes portais de notícias não confirmam a informação.</li>
+                            </ul>
+                             <div class="text-center mt-6">
+                                <button class="btn btn-secondary" onclick="simGoTo(1)">Reiniciar Simulação</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -229,6 +297,14 @@
                     <h4 class="text-xl font-bold mb-4 text-center">Impactos Reais da Desinformação</h4>
                     <div class="chart-container">
                         <canvas id="impactsChart"></canvas>
+                    </div>
+                    <div class="chart-source mt-6">
+                        <p class="font-semibold mb-2">Fontes dos Dados:</p>
+                        <ul>
+                            <li><a href="https://agenciabrasil.ebc.com.br/geral/noticia/2025-05/desinformacao-e-principal-risco-global-para-2025-e-anos-subsequentes" target="_blank" rel="noopener noreferrer">Agência Brasil: "Desinformação é principal risco global para 2025 e anos seguintes" (Maio/2025)</a></li>
+                            <li><a href="https://www12.senado.leg.br/noticias/materias/2024/08/23/para-brasileiros-noticias-falsas-impactam-eleicoes-revela-datasenado" target="_blank" rel="noopener noreferrer">Senado Notícias: "Para brasileiros, notícias falsas impactam eleições, revela DataSenado" (Ago/2024)</a></li>
+                            <li><a href="https://www.apm.org.br/brasileiros-sao-especialmente-vulneraveis-as-fake-news-em-saude-entenda-os-motivos/" target="_blank" rel="noopener noreferrer">APM: "Brasileiros são especialmente vulneráveis às fake news em saúde; entenda os motivos" (2018/2022)</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -253,6 +329,7 @@
                          <p class="text-lg">Você acertou <span id="score"></span> de <span id="total-questions"></span>.</p>
                          <button id="retry-quiz-btn" class="btn btn-secondary mt-4">Tentar Novamente</button>
                     </div>
+                     <div id="quiz-feedback-message" class="quiz-feedback hidden"></div>
                 </div>
                 
                 <div class="space-y-4">
@@ -298,12 +375,14 @@
                 <a href="https://projetocomprova.com.br/" target="_blank" class="hover:text-teal-300">Projeto Comprova</a>
             </div>
             <p class="text-sm text-gray-400 mt-8">Esta é uma aplicação interativa criada para fins educacionais.</p>
+            <p class="text-base font-bold text-teal-300 mt-2">Apresentado por: Emanuel Marinho, Israel Levi, José Bezerra, Lucca Rocha</p>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             
+            // Gráfico de Influência no Comportamento (Atualizado)
             const influenceCtx = document.getElementById('influenceChart').getContext('2d');
             new Chart(influenceCtx, {
                 type: 'bar',
@@ -311,7 +390,7 @@
                     labels: ['Comprar algo', 'Formar opinião', 'Visitar um lugar'],
                     datasets: [{
                         label: '% de influência percebida',
-                        data: [65, 78, 55],
+                        data: [73, 83, 62.8], // Dados atualizados do PDF
                         backgroundColor: ['#0B6A6B', '#5B9A9A', '#A8CACB'],
                         borderRadius: 5,
                     }]
@@ -342,14 +421,15 @@
                 }
             });
 
+            // Gráfico de Impactos (Mantido conforme original)
             const impactsCtx = document.getElementById('impactsChart').getContext('2d');
             new Chart(impactsCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Danos à Democracia', 'Riscos à Saúde Pública', 'Prejuízos à Vida Pessoal'],
+                    labels: ['Impacto nas Eleições', 'Vulnerabilidade à Desinformação em Saúde', 'Prejuízo à Reputação Alheia'],
                     datasets: [{
                         label: 'Impactos das Fake News',
-                        data: [40, 35, 25],
+                        data: [81, 62, 22], // Atualizado com dados do PDF
                         backgroundColor: ['#D64933', '#F5A623', '#8B572A'],
                         borderColor: '#F8F7F4',
                         borderWidth: 4,
@@ -370,6 +450,7 @@
                 }
             });
             
+            // Restante do código JavaScript permanece igual...
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('main section');
             const mobileNav = document.getElementById('mobile-nav');
@@ -430,16 +511,17 @@
             });
 
             const quizData = [
-                { question: "Uma notícia com título 'URGENTE' e letras maiúsculas é geralmente confiável.", answer: false },
-                { question: "Se uma notícia foi compartilhada por um amigo ou familiar, ela é automaticamente verdadeira.", answer: false },
-                { question: "Verificar a data de publicação é importante, pois notícias antigas podem ser usadas fora de contexto.", answer: true },
-                { question: "Sites com erros de português e design amador são um sinal de alerta para fake news.", answer: true }
+                { question: "Uma notícia com título 'URGENTE' e letras maiúsculas é geralmente confiável.", answer: false, explanation: "Títulos sensacionalistas e em caixa alta são táticas comuns para atrair atenção em fake news, não indicam confiabilidade." },
+                { question: "Se uma notícia foi compartilhada por um amigo ou familiar, ela é automaticamente verdadeira.", answer: false, explanation: "Mesmo amigos e familiares podem compartilhar informações sem verificar. Sempre confira a fonte original." },
+                { question: "Verificar a data de publicação é importante, pois notícias antigas podem ser usadas fora de contexto.", answer: true, explanation: "Notícias antigas podem ser resgatadas e apresentadas como atuais para enganar, alterando completamente o contexto." },
+                { question: "Sites com erros de português e design amador são um sinal de alerta para fake news.", answer: true, explanation: "Publicações sérias geralmente investem em revisão e design profissional. Erros básicos podem ser um indicativo de falta de credibilidade." }
             ];
 
             const quizContainer = document.getElementById('quiz-container');
             const quizContent = document.getElementById('quiz-content');
             const startQuizBtn = document.getElementById('start-quiz-btn');
             const quizResult = document.getElementById('quiz-result');
+            const quizFeedbackMessage = document.getElementById('quiz-feedback-message');
             let currentQuestionIndex = 0;
             let score = 0;
 
@@ -447,6 +529,7 @@
                 currentQuestionIndex = 0;
                 score = 0;
                 quizResult.classList.add('hidden');
+                quizFeedbackMessage.classList.add('hidden');
                 showQuestion();
             }
 
@@ -466,15 +549,30 @@
 
             function handleAnswer(e) {
                 const selectedAnswer = e.target.dataset.answer === 'true';
-                if (selectedAnswer === quizData[currentQuestionIndex].answer) {
+                const questionData = quizData[currentQuestionIndex];
+                
+                quizFeedbackMessage.classList.remove('hidden');
+                if (selectedAnswer === questionData.answer) {
                     score++;
-                }
-                currentQuestionIndex++;
-                if (currentQuestionIndex < quizData.length) {
-                    showQuestion();
+                    quizFeedbackMessage.textContent = `Correto! ${questionData.explanation}`;
+                    quizFeedbackMessage.classList.remove('incorrect');
+                    quizFeedbackMessage.classList.add('correct');
                 } else {
-                    showResult();
+                    quizFeedbackMessage.textContent = `Incorreto. ${questionData.explanation}`;
+                    quizFeedbackMessage.classList.remove('correct');
+                    quizFeedbackMessage.classList.add('incorrect');
                 }
+
+                // Pequeno atraso para o usuário ler o feedback antes de ir para a próxima pergunta
+                setTimeout(() => {
+                    currentQuestionIndex++;
+                    quizFeedbackMessage.classList.add('hidden'); // Esconde feedback para a próxima pergunta
+                    if (currentQuestionIndex < quizData.length) {
+                        showQuestion();
+                    } else {
+                        showResult();
+                    }
+                }, 2000); // 2 segundos de atraso
             }
 
             function showResult() {
@@ -486,6 +584,44 @@
 
             startQuizBtn.addEventListener('click', startQuiz);
             document.getElementById('retry-quiz-btn').addEventListener('click', startQuiz);
+
+
+            // Lógica para alternar conteúdo na seção de Fake News
+            const contentToggleButtons = document.querySelectorAll('.content-toggle-btn');
+            const contentExample = document.getElementById('content-example'); // Este div está vazio agora
+            const contentSimulation = document.getElementById('content-simulation');
+
+            function toggleFakeNewsContent(contentType) {
+                // Remove a classe 'active' de todos os botões de alternância
+                contentToggleButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                if (contentType === 'example') { // Este caso não deve ser ativado por não haver botão
+                    contentExample.classList.remove('hidden-content');
+                    contentExample.classList.add('active-content');
+                    contentSimulation.classList.remove('active-content');
+                    contentSimulation.classList.add('hidden-content');
+                    clearInterval(simInterval); 
+                } else { // contentType === 'simulation' (sempre ativo agora)
+                    contentSimulation.classList.remove('hidden-content');
+                    contentSimulation.classList.add('active-content');
+                    contentExample.classList.remove('active-content'); // Garante que o exemplo está escondido
+                    contentExample.classList.add('hidden-content');
+                    // Ativa o botão de simulação como ativo
+                    document.querySelector('.content-toggle-btn[data-content="simulation"]').classList.add('active');
+                    simGoTo(1); // Reinicia a simulação para o passo 1
+                }
+            }
+
+            contentToggleButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    toggleFakeNewsContent(e.target.dataset.content);
+                });
+            });
+
+            // Forçar a simulação a ser o conteúdo ativo no carregamento e único
+            toggleFakeNewsContent('simulation');
 
         });
 
