@@ -1,2 +1,2 @@
 # etica
-Trabalho sobre a ética direcionado as redes sociais
+Trabalho sobre a ética direcionado as redes sociais. 
